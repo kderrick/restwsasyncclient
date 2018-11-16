@@ -3,6 +3,7 @@ package com.kyle.restwsasync.client;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.client.AsyncInvoker;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -29,7 +30,10 @@ public class CheckProcessingClient {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			e.printStackTrace();
+			if(e.getCause() instanceof BadRequestException) {
+				BadRequestException bre = (BadRequestException) e.getCause();
+				System.out.println("Please send a valid list of checks");
+			}
 		}
 		
 		
